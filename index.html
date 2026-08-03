@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css.css" />
+  <title>Minha Wishlist Interativa</title>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>✨ Minha Wishlist</h1>
+      <p>Arraste para reordenar seus itens de desejo</p>
+    </header>
+
+    <!-- Formulário para adicionar novos itens -->
+    <form id="wishlist-form">
+      <div class="input-group">
+        <input type="text" id="item-name" placeholder="O que você quer comprar?" required />
+      </div>
+
+      <div class="input-group row">
+        <input type="number" id="item-price" placeholder="Preço estimado (R$)" step="0.01" min="0" />
+        
+        <select id="item-priority">
+          <option value="1">Prioridade: Baixa</option>
+          <option value="2" selected>Prioridade: Média</option>
+          <option value="3">Prioridade: Alta</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <input type="url" id="item-product-url" placeholder="Link da loja do produto (URL opcional)" />
+      </div>
+
+      <div class="file-input-wrapper">
+        <label for="item-image">📸 Adicionar Foto (Upload)</label>
+        <input type="file" id="item-image" accept="image/*" />
+      </div>
+      <div class="input-group">
+        <input type="url" id="item-image-url" placeholder="Ou cole o link da foto (URL)" />
+      </div>
+
+      <button type="submit" class="btn-primary" id="add-btn">Adicionar à Lista</button>
+    </form>
+
+    <!-- Resumo -->
+    <div class="summary">
+      <span>Total estimado: <strong id="total-price">R$ 0,00</strong></span>
+      <span>Itens: <strong id="total-items">0</strong></span>
+    </div>
+
+    <!-- Lista de Itens (Com Drag & Drop) -->
+    <ul id="wishlist" class="wishlist"></ul>
+  </div>
+
+  <!-- Mini Janela / Modal de Edição -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <h2>Editar Item</h2>
+      
+      <!-- Pré-visualização da Imagem Atual -->
+      <div class="modal-preview">
+        <img id="modal-img-preview" src="" alt="Preview" onerror="this.src='https://via.placeholder.com/48?text=🛍️'" />
+        <span style="font-size:0.85rem; color:#666;">Foto Atual do Item</span>
+      </div>
+
+      <div class="input-group">
+        <label style="font-size:0.85rem; color:#666;">Preço (R$):</label>
+        <input type="number" id="modal-price" step="0.01" min="0" />
+      </div>
+
+      <div class="input-group">
+        <label style="font-size:0.85rem; color:#666;">Prioridade:</label>
+        <select id="modal-priority">
+          <option value="1">Baixa</option>
+          <option value="2">Média</option>
+          <option value="3">Alta</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label style="font-size:0.85rem; color:#666;">Link do Produto (URL):</label>
+        <input type="url" id="modal-product-url" placeholder="https://..." />
+      </div>
+
+      <!-- Opção de Alterar Foto dentro do Modal -->
+      <div class="file-input-wrapper">
+        <label for="modal-image-file">📸 Alterar Foto (Upload)</label>
+        <input type="file" id="modal-image-file" accept="image/*" />
+      </div>
+      <div class="input-group">
+        <label style="font-size:0.85rem; color:#666;">Ou alterar foto por Link (URL):</label>
+        <input type="url" id="modal-image-url" placeholder="Cole a nova URL da foto" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="modal-cancel">Cancelar</button>
+        <button type="button" class="btn-primary" id="modal-save">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="Script.js"></script>
+
+  <footer>
+    <p>Desenvolvido por <a href="https://github.com/caitlol-dev" target="_blank">Caitlol.dev</a></p>
+  </footer>
+</body>
+</html>
