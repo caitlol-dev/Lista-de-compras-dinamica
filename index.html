@@ -18,6 +18,12 @@
         </div>
       </header>
 
+      <nav class="site-tabs" aria-label="Navegação principal">
+        <button type="button" class="site-tab active" data-view="wishlist-view" aria-selected="true">Wishlist</button>
+        <button type="button" class="site-tab" data-view="about-view" aria-selected="false">Sobre</button>
+      </nav>
+
+      <div id="wishlist-view" class="page-view active-view">
       <section class="panel form-panel" aria-labelledby="add-item-title">
         <div class="section-heading">
           <div>
@@ -118,6 +124,85 @@
           <div class="empty-icon" aria-hidden="true"></div>
           <h3>Sua lista está vazia</h3>
           <p>Adicione seu primeiro item usando o formulário acima.</p>
+        </div>
+      </section>
+      </div>
+
+      <section id="about-view" class="page-view about-view" hidden aria-labelledby="about-title">
+        <div class="about-hero panel">
+          <div class="about-hero-copy">
+            <span class="eyebrow">SOBRE O SITE</span>
+            <h2 id="about-title">Um lugar simples para organizar o que você quer comprar</h2>
+            <p>Esta wishlist foi criada para reunir desejos de compra em um só lugar, comparar prioridades e acompanhar o que já saiu da lista.</p>
+          </div>
+          <div class="about-highlight" aria-label="Resumo do funcionamento">
+            <strong>Planeje antes de comprar</strong>
+            <span>Guarde o item, o preço, a prioridade, o link e uma imagem para consultar depois.</span>
+          </div>
+        </div>
+
+        <div class="about-section panel">
+          <div class="about-heading">
+            <span class="eyebrow">PASSO A PASSO</span>
+            <h2>Como funciona</h2>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">01</span>
+              <h3>Adicione um desejo</h3>
+              <p>Informe o nome do produto e, se quiser, acrescente preço, prioridade, link da loja e imagem.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">02</span>
+              <h3>Organize por prioridade</h3>
+              <p>Defina o que é mais importante e reorganize os itens para deixar sua lista do jeito que preferir.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">03</span>
+              <h3>Acompanhe seus itens</h3>
+              <p>Use os filtros para ver todos os desejos, somente os pendentes ou aquilo que você já comprou.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">04</span>
+              <h3>Conclua sem perder o histórico</h3>
+              <p>Quando comprar algo, marque como concluído. O item continua na lista e pode ser reaberto quando necessário.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="about-section panel">
+          <div class="about-heading">
+            <span class="eyebrow">POR QUE USAR</span>
+            <h2>Benefícios de ter uma wishlist</h2>
+          </div>
+
+          <div class="benefits-grid">
+            <article class="benefit-card">
+              <h3>Mais organização</h3>
+              <p>Você evita espalhar links e ideias em várias abas, conversas ou anotações diferentes.</p>
+            </article>
+            <article class="benefit-card">
+              <h3>Compras mais conscientes</h3>
+              <p>Deixar um desejo salvo por um tempo ajuda a decidir com mais calma se ele realmente vale a compra.</p>
+            </article>
+            <article class="benefit-card">
+              <h3>Controle de prioridades</h3>
+              <p>Separar itens por importância facilita escolher onde seu dinheiro faz mais sentido primeiro.</p>
+            </article>
+            <article class="benefit-card">
+              <h3>Visão do valor pendente</h3>
+              <p>O total da lista ajuda a ter uma noção rápida de quanto custariam os itens que ainda faltam.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="storage-note">
+          <div>
+            <strong>Onde os dados ficam salvos?</strong>
+            <p>Nesta versão, sua lista é armazenada no próprio navegador usando armazenamento local. Ela não é sincronizada automaticamente entre celulares, computadores ou navegadores diferentes.</p>
+          </div>
+          <button type="button" class="btn-primary about-back-btn">Ir para minha wishlist</button>
         </div>
       </section>
     </div>

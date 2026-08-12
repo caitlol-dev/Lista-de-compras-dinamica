@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const toast = document.getElementById('toast');
   const mobileAddButton = document.getElementById('mobile-add-button');
+  const siteTabs = document.querySelectorAll('.site-tab');
+  const pageViews = document.querySelectorAll('.page-view');
+  const aboutBackButton = document.querySelector('.about-back-btn');
 
   const modalOverlay = document.getElementById('edit-modal');
   const modalImgPreview = document.getElementById('modal-img-preview');
@@ -340,6 +343,48 @@ document.addEventListener('DOMContentLoaded', () => {
       modalImgPreview.style.opacity = '1';
     }
   });
+
+  const switchView = (viewId, updateHash = true) => {
+    const target = document.getElementById(viewId);
+    if (!target) return;
+
+    pageViews.forEach((view) => {
+      const isActive = view.id === viewId;
+      view.hidden = !isActive;
+      view.classList.toggle('active-view', isActive);
+    });
+
+    siteTabs.forEach((tab) => {
+      const isActive = tab.dataset.view === viewId;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', String(isActive));
+    });
+
+    const isAbout = viewId === 'about-view';
+    document.body.classList.toggle('about-active', isAbout);
+
+    if (updateHash) {
+      const hash = isAbout ? '#sobre' : '#wishlist';
+      if (window.location.hash !== hash) history.replaceState(null, '', hash);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  siteTabs.forEach((tab) => {
+    tab.addEventListener('click', () => switchView(tab.dataset.view));
+  });
+
+  if (aboutBackButton) {
+    aboutBackButton.addEventListener('click', () => switchView('wishlist-view'));
+  }
+
+  window.addEventListener('hashchange', () => {
+    switchView(window.location.hash === '#sobre' ? 'about-view' : 'wishlist-view', false);
+  });
+
+  const initialView = window.location.hash === '#sobre' ? 'about-view' : 'wishlist-view';
+  switchView(initialView, false);
 
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {

@@ -1357,3 +1357,297 @@ body.modal-open {
     gap: 6px;
   }
 }
+
+/* ===== Navegação e página Sobre ===== */
+.site-tabs {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.site-tab {
+  min-height: 38px;
+  border: 0;
+  border-radius: 9px;
+  padding: 0 16px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 780;
+  transition: background-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.site-tab:hover {
+  color: var(--text);
+  background: var(--surface-soft);
+}
+
+.site-tab.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+.page-view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-view[hidden] {
+  display: none !important;
+}
+
+.about-view {
+  animation: aboutFadeIn 0.22s ease;
+}
+
+.about-hero,
+.about-section {
+  padding: 28px;
+}
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(240px, 0.75fr);
+  align-items: stretch;
+  gap: 24px;
+}
+
+.about-hero-copy h2,
+.about-heading h2 {
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.about-hero-copy h2 {
+  max-width: 610px;
+  font-size: clamp(1.65rem, 4vw, 2.25rem);
+}
+
+.about-hero-copy p {
+  max-width: 650px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.about-highlight {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 170px;
+  padding: 20px;
+  border: 1px solid #dbeafe;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+}
+
+.about-highlight::before {
+  content: "✓";
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin-bottom: auto;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+}
+
+.about-highlight strong {
+  color: #1e3a8a;
+  font-size: 0.96rem;
+}
+
+.about-highlight span {
+  color: #516174;
+  font-size: 0.82rem;
+}
+
+.about-heading {
+  margin-bottom: 20px;
+}
+
+.about-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.about-heading h2 {
+  font-size: 1.35rem;
+}
+
+.steps-grid,
+.benefits-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.steps-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.step-card,
+.benefit-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.step-card {
+  position: relative;
+  min-height: 178px;
+  padding: 19px;
+}
+
+.step-number {
+  display: inline-block;
+  margin-bottom: 26px;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.step-card h3,
+.benefit-card h3 {
+  margin-bottom: 7px;
+  color: #253047;
+  font-size: 0.94rem;
+}
+
+.step-card p,
+.benefit-card p {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.benefits-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.benefit-card {
+  padding: 18px;
+}
+
+.benefit-card::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 4px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.storage-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 22px 24px;
+  border: 1px solid #dbeafe;
+  border-radius: var(--radius-lg);
+  background: var(--primary-soft);
+}
+
+.storage-note > div {
+  max-width: 620px;
+}
+
+.storage-note strong {
+  color: #1e3a8a;
+  font-size: 0.9rem;
+}
+
+.storage-note p {
+  margin-top: 5px;
+  color: #516174;
+  font-size: 0.8rem;
+}
+
+.storage-note .btn-primary {
+  flex: 0 0 auto;
+  box-shadow: none;
+}
+
+@keyframes aboutFadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .site-tabs {
+    position: sticky;
+    top: 8px;
+    z-index: 50;
+    width: 100%;
+    align-self: stretch;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+  }
+
+  .site-tab {
+    min-height: 44px;
+    flex: 1;
+    font-size: 0.86rem;
+  }
+
+  .page-view {
+    gap: 14px;
+  }
+
+  .about-hero,
+  .about-section {
+    padding: 18px;
+  }
+
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-highlight {
+    min-height: 150px;
+  }
+
+  .steps-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-card {
+    min-height: 0;
+    padding: 17px;
+  }
+
+  .step-number {
+    margin-bottom: 18px;
+  }
+
+  .benefit-card {
+    padding: 17px;
+  }
+
+  .storage-note {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .storage-note .btn-primary {
+    width: 100%;
+  }
+
+  body.about-active .mobile-add-button {
+    display: none;
+  }
+}
