@@ -3,108 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
   <link rel="stylesheet" href="css.css" />
   <title>Minha Wishlist Interativa</title>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>✨ Minha Wishlist</h1>
-      <p>Arraste para reordenar seus itens de desejo</p>
-    </header>
+  <main class="page-shell">
+    <div class="container">
+      <header class="page-header">
+        <div>
+          <span class="eyebrow">LISTA PESSOAL</span>
+          <h1>Minha Wishlist</h1>
+          <p>Organize o que você quer comprar, acompanhe prioridades e marque o que já conseguiu.</p>
+        </div>
+      </header>
 
-    <!-- Formulário para adicionar novos itens -->
-    <form id="wishlist-form">
-      <div class="input-group">
-        <input type="text" id="item-name" placeholder="O que você quer comprar?" required />
-      </div>
+      <section class="panel form-panel" aria-labelledby="add-item-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="add-item-title">Adicionar novo item</h2>
+            <p>Preencha o nome e, se quiser, complemente com preço, link e imagem.</p>
+          </div>
+        </div>
 
-      <div class="input-group row">
-        <input type="number" id="item-price" placeholder="Preço estimado (R$)" step="0.01" min="0" />
-        
-        <select id="item-priority">
-          <option value="1">Prioridade: Baixa</option>
-          <option value="2" selected>Prioridade: Média</option>
-          <option value="3">Prioridade: Alta</option>
-        </select>
-      </div>
+        <form id="wishlist-form">
+          <div class="input-group full-width">
+            <label for="item-name">Nome do item <span>*</span></label>
+            <input type="text" id="item-name" placeholder="Ex.: Fone de ouvido" required autocomplete="off" />
+          </div>
 
-      <div class="input-group">
-        <input type="url" id="item-product-url" placeholder="Link da loja do produto (URL opcional)" />
-      </div>
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="item-price">Preço estimado</label>
+              <div class="price-input">
+                <span>R$</span>
+                <input type="number" id="item-price" placeholder="0,00" step="0.01" min="0" inputmode="decimal" />
+              </div>
+            </div>
 
-      <div class="file-input-wrapper">
-        <label for="item-image">📸 Adicionar Foto (Upload)</label>
-        <input type="file" id="item-image" accept="image/*" />
-      </div>
-      <div class="input-group">
-        <input type="url" id="item-image-url" placeholder="Ou cole o link da foto (URL)" />
-      </div>
+            <div class="input-group">
+              <label for="item-priority">Prioridade</label>
+              <select id="item-priority">
+                <option value="1">Baixa</option>
+                <option value="2" selected>Média</option>
+                <option value="3">Alta</option>
+              </select>
+            </div>
+          </div>
 
-      <button type="submit" class="btn-primary" id="add-btn">Adicionar à Lista</button>
-    </form>
+          <div class="input-group full-width">
+            <label for="item-product-url">Link do produto</label>
+            <input type="url" id="item-product-url" placeholder="https://loja.com/produto" />
+          </div>
 
-    <!-- Resumo -->
-    <div class="summary">
-      <span>Total estimado: <strong id="total-price">R$ 0,00</strong></span>
-      <span>Itens: <strong id="total-items">0</strong></span>
+          <div class="image-fields">
+            <div class="file-input-wrapper">
+              <label for="item-image">
+                <strong>Escolher imagem</strong>
+                <span id="file-name">Nenhum arquivo selecionado</span>
+              </label>
+              <input type="file" id="item-image" accept="image/*" />
+            </div>
+
+            <div class="image-divider"><span>ou</span></div>
+
+            <div class="input-group image-url-group">
+              <label for="item-image-url">URL da imagem</label>
+              <input type="url" id="item-image-url" placeholder="https://..." />
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <div class="image-preview" id="new-image-preview" aria-live="polite">
+              <span>Prévia da imagem</span>
+            </div>
+            <button type="submit" class="btn-primary" id="add-btn">Adicionar à lista</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="list-section" aria-labelledby="wishlist-title">
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span class="summary-label">Total pendente</span>
+            <strong id="total-price">R$ 0,00</strong>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">Itens na lista</span>
+            <strong id="total-items">0</strong>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">Concluídos</span>
+            <strong id="completed-items">0</strong>
+          </article>
+        </div>
+
+        <div class="list-toolbar">
+          <div>
+            <h2 id="wishlist-title">Seus itens</h2>
+            <p>Arraste os cards para reorganizar a ordem.</p>
+          </div>
+
+          <div class="filter-group" role="group" aria-label="Filtrar itens">
+            <button type="button" class="filter-btn active" data-filter="all">Todos</button>
+            <button type="button" class="filter-btn" data-filter="pending">Pendentes</button>
+            <button type="button" class="filter-btn" data-filter="completed">Comprados</button>
+          </div>
+        </div>
+
+        <ul id="wishlist" class="wishlist"></ul>
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon" aria-hidden="true"></div>
+          <h3>Sua lista está vazia</h3>
+          <p>Adicione seu primeiro item usando o formulário acima.</p>
+        </div>
+      </section>
     </div>
 
-    <!-- Lista de Itens (Com Drag & Drop) -->
-    <ul id="wishlist" class="wishlist"></ul>
-  </div>
+    <footer>
+      <p>Desenvolvido por <a href="https://github.com/caitlol-dev" target="_blank" rel="noopener noreferrer">Caitlol.dev</a></p>
+    </footer>
+  </main>
 
-  <!-- Mini Janela / Modal de Edição -->
-  <div class="modal-overlay" id="edit-modal">
-    <div class="modal">
-      <h2>Editar Item</h2>
-      
-      <!-- Pré-visualização da Imagem Atual -->
+  <div class="modal-overlay" id="edit-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">EDIÇÃO</span>
+          <h2 id="modal-title">Editar item</h2>
+        </div>
+        <button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">×</button>
+      </div>
+
       <div class="modal-preview">
-        <img id="modal-img-preview" src="" alt="Preview" onerror="this.src='https://via.placeholder.com/48?text=🛍️'" />
-        <span style="font-size:0.85rem; color:#666;">Foto Atual do Item</span>
+        <img id="modal-img-preview" src="" alt="Prévia da imagem do item" />
+        <div>
+          <strong>Imagem atual</strong>
+          <span>Você pode trocar por upload ou URL.</span>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="modal-price">Preço</label>
+          <div class="price-input">
+            <span>R$</span>
+            <input type="number" id="modal-price" step="0.01" min="0" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="modal-priority">Prioridade</label>
+          <select id="modal-priority">
+            <option value="1">Baixa</option>
+            <option value="2">Média</option>
+            <option value="3">Alta</option>
+          </select>
+        </div>
       </div>
 
       <div class="input-group">
-        <label style="font-size:0.85rem; color:#666;">Preço (R$):</label>
-        <input type="number" id="modal-price" step="0.01" min="0" />
-      </div>
-
-      <div class="input-group">
-        <label style="font-size:0.85rem; color:#666;">Prioridade:</label>
-        <select id="modal-priority">
-          <option value="1">Baixa</option>
-          <option value="2">Média</option>
-          <option value="3">Alta</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label style="font-size:0.85rem; color:#666;">Link do Produto (URL):</label>
+        <label for="modal-product-url">Link do produto</label>
         <input type="url" id="modal-product-url" placeholder="https://..." />
       </div>
 
-      <!-- Opção de Alterar Foto dentro do Modal -->
-      <div class="file-input-wrapper">
-        <label for="modal-image-file">📸 Alterar Foto (Upload)</label>
+      <div class="file-input-wrapper compact">
+        <label for="modal-image-file">
+          <strong>Alterar imagem</strong>
+          <span id="modal-file-name">Escolher arquivo</span>
+        </label>
         <input type="file" id="modal-image-file" accept="image/*" />
       </div>
+
       <div class="input-group">
-        <label style="font-size:0.85rem; color:#666;">Ou alterar foto por Link (URL):</label>
-        <input type="url" id="modal-image-url" placeholder="Cole a nova URL da foto" />
+        <label for="modal-image-url">Ou use uma URL de imagem</label>
+        <input type="url" id="modal-image-url" placeholder="https://..." />
       </div>
 
       <div class="modal-actions">
         <button type="button" class="btn-secondary" id="modal-cancel">Cancelar</button>
-        <button type="button" class="btn-primary" id="modal-save">Salvar Alterações</button>
+        <button type="button" class="btn-primary" id="modal-save">Salvar alterações</button>
       </div>
     </div>
   </div>
 
-  <script src="Script.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<<<<<<< HEAD
   <footer>
     <p>Desenvolvido por <a href="https://github.com/caitlol-dev" target="_blank">Caitlol.dev</a></p>
 </footer>
+=======
+  <script src="Script.js"></script>
+>>>>>>> fa54468 (melhora na aparencia e usabilidade)
 </body>
 </html>
