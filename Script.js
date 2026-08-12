@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const siteTabs = document.querySelectorAll('.site-tab');
   const pageViews = document.querySelectorAll('.page-view');
   const aboutBackButton = document.querySelector('.about-back-btn');
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleState = document.getElementById('theme-toggle-state');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   const modalOverlay = document.getElementById('edit-modal');
   const modalImgPreview = document.getElementById('modal-img-preview');
@@ -38,6 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
   let modalBase64Image = '';
   let activeFilter = 'all';
   let toastTimer;
+
+  const applyTheme = (theme, persist = true) => {
+    const safeTheme = theme === 'dark' ? 'dark' : 'light';
+    const isDark = safeTheme === 'dark';
+
+    document.documentElement.dataset.theme = safeTheme;
+    document.documentElement.style.colorScheme = safeTheme;
+
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Ativar tema claro' : 'Ativar tema escuro');
+    }
+
+    if (themeToggleState) themeToggleState.textContent = isDark ? 'Escuro' : 'Claro';
+    if (themeColorMeta) themeColorMeta.setAttribute('content', isDark ? '#0b1120' : '#f5f7fb');
+
+    if (persist) localStorage.setItem('wishlist_theme', safeTheme);
+  };
+
+  const initialTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  applyTheme(initialTheme, false);
 
   let items = [];
   try {
@@ -385,6 +409,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const initialView = window.location.hash === '#sobre' ? 'about-view' : 'wishlist-view';
   switchView(initialView, false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      showToast(nextTheme === 'dark' ? 'Tema escuro ativado.' : 'Tema claro ativado.');
+    });
+  }
 
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {

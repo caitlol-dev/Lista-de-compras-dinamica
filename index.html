@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#2563eb" />
+  <meta name="theme-color" content="#f5f7fb" />
+  <script>
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem('wishlist_theme');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const initialTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : preferredTheme;
+        document.documentElement.dataset.theme = initialTheme;
+        document.documentElement.style.colorScheme = initialTheme;
+      } catch (_) {}
+    })();
+  </script>
   <link rel="stylesheet" href="css.css" />
   <title>Minha Wishlist Interativa</title>
 </head>
@@ -11,11 +22,19 @@
   <main class="page-shell">
     <div class="container">
       <header class="page-header">
-        <div>
+        <div class="header-copy">
           <span class="eyebrow">LISTA PESSOAL</span>
           <h1>Minha Wishlist</h1>
           <p>Organize o que você quer comprar, acompanhe prioridades e marque o que já conseguiu.</p>
         </div>
+
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Ativar tema escuro">
+          <span class="theme-toggle-copy">
+            <span class="theme-toggle-label">Tema</span>
+            <strong id="theme-toggle-state">Claro</strong>
+          </span>
+          <span class="theme-switch" aria-hidden="true"><span></span></span>
+        </button>
       </header>
 
       <nav class="site-tabs" aria-label="Navegação principal">
