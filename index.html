@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#2563eb" />
   <link rel="stylesheet" href="css.css" />
   <title>Minha Wishlist Interativa</title>
@@ -101,7 +101,8 @@
         <div class="list-toolbar">
           <div>
             <h2 id="wishlist-title">Seus itens</h2>
-            <p>Arraste os cards para reorganizar a ordem.</p>
+            <p class="desktop-reorder-hint">Arraste os cards para reorganizar a ordem.</p>
+            <p class="mobile-reorder-hint">Use os botões Subir e Descer para reorganizar.</p>
           </div>
 
           <div class="filter-group" role="group" aria-label="Filtrar itens">
@@ -187,6 +188,8 @@
       </div>
     </div>
   </div>
+
+  <button type="button" class="mobile-add-button" id="mobile-add-button" aria-label="Ir para o formulário de novo item">Adicionar item</button>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

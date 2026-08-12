@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyState = document.getElementById('empty-state');
   const filterButtons = document.querySelectorAll('.filter-btn');
   const toast = document.getElementById('toast');
+  const mobileAddButton = document.getElementById('mobile-add-button');
 
   const modalOverlay = document.getElementById('edit-modal');
   const modalImgPreview = document.getElementById('modal-img-preview');
@@ -94,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModal = () => {
     modalOverlay.classList.remove('active');
     modalOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
     currentEditingIndex = null;
   };
 
@@ -118,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalOverlay.classList.add('active');
     modalOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
     setTimeout(() => modalPriceInput.focus(), 50);
   };
 
@@ -162,7 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
     visibleItems.forEach(({ item, index }) => {
       const li = document.createElement('li');
       li.className = `item-card p-${item.priority}${item.completed ? ' is-completed' : ''}`;
-      li.draggable = activeFilter === 'all';
+      const isTouchLayout = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+      li.draggable = activeFilter === 'all' && !isTouchLayout;
       li.dataset.index = index;
 
       const priorityText = { 3: 'Alta', 2: 'Média', 1: 'Baixa' }[item.priority] || 'Média';
@@ -179,6 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="badge p-${item.priority}">${priorityText}</span>
             </div>
           </div>
+        </div>
+        <div class="move-controls" aria-label="Reorganizar item" ${activeFilter === 'all' ? '' : 'hidden'}>
+          <button type="button" class="move-btn move-up-btn" ${index === 0 ? 'disabled' : ''}>Subir</button>
+          <button type="button" class="move-btn move-down-btn" ${index === items.length - 1 ? 'disabled' : ''}>Descer</button>
         </div>
         <div class="actions">
           <button type="button" class="btn-action edit-btn">Editar</button>
@@ -199,6 +207,20 @@ document.addEventListener('DOMContentLoaded', () => {
           itemImage.replaceWith(placeholder);
         });
       }
+
+      li.querySelector('.move-up-btn').addEventListener('click', () => {
+        if (index <= 0) return;
+        [items[index - 1], items[index]] = [items[index], items[index - 1]];
+        saveItems();
+        showToast('Item movido para cima.');
+      });
+
+      li.querySelector('.move-down-btn').addEventListener('click', () => {
+        if (index >= items.length - 1) return;
+        [items[index + 1], items[index]] = [items[index], items[index + 1]];
+        saveItems();
+        showToast('Item movido para baixo.');
+      });
 
       li.querySelector('.edit-btn').addEventListener('click', () => openModal(index));
 
@@ -222,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       li.querySelector('.delete-btn').addEventListener('click', () => {
         const removedName = items[index].name;
+        if (!window.confirm(`Excluir “${removedName}” da lista?`)) return;
         items.splice(index, 1);
         saveItems();
         showToast(`“${removedName}” foi removido.`);
@@ -389,6 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
     saveItems();
     showToast('Item adicionado à wishlist.');
     itemNameInput.focus();
+  });
+
+  mobileAddButton.addEventListener('click', () => {
+    document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => itemNameInput.focus(), 450);
   });
 
   render();
